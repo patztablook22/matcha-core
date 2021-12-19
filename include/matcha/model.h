@@ -9,6 +9,7 @@
 
 namespace matcha {
 
+
 class Model {
   private:
     Transformer transformer;

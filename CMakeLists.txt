@@ -10,43 +10,32 @@ set(CMAKE_TOOLCHAIN_FILE /home/patz/.config/vcpkg/scripts/buildsystems/vcpkg.cma
 add_compile_definitions(_GLIBCXX_USE_CXX11_ABI=1)
 set(CMAKE_INSTALL_PREFIX /home/patz/Heap/matcha/install)
 
-# dependencies
-SET(Boost_USE_STATIC_LIBS   ON)
-
-
-#set(Boost_ROOT "C:/Program Files/boost_1_75_0")
-list(APPEND Boost_INCLUDE_DIRS "/home/patz/.config/vcpkg/inistalled/x64-linux/include")
-set(Boost_DEBUG 1)
-find_package(
-  Boost 1.75
-  REQUIRED COMPONENTS
-  serialization
-  container
-  compute
-  #parameter
-)
-
-
 add_library(${PROJECT_NAME} SHARED)
+
+# dependencies
+# reeeeeeeeeeEEEEEEEEEEEEEEEEEEE
+
+find_package(Boost COMPONENTS REQUIRED serialization)
 
 target_include_directories(${PROJECT_NAME}
   PRIVATE 
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-
 target_sources(matcha
   PRIVATE
     src/matcha/model.cpp
+    src/matcha/tensor.cpp
+    src/matcha/backend/ndarray.cpp
 )
 
 
-target_link_libraries(${PROJECT_NAME}
+target_link_libraries(
+  ${PROJECT_NAME}
   PRIVATE
     Boost::serialization
-    # Boost::Parameter
-    # Boost::Compute
 )
+
 
 include(GNUInstallDirs)
 
@@ -68,5 +57,3 @@ install(
   # NAMESPACE "matcha::"
   DESTINATION cmake
 )
-
-#add_executable(main main.cpp)

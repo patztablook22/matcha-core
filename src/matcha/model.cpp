@@ -5,6 +5,7 @@
 // model serialization
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
+#include <boost/compute/version.hpp>
 
 namespace matcha {
 
