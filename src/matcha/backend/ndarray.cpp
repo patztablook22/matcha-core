@@ -6,71 +6,110 @@
 namespace matcha {
 namespace backend {
 
-template <class T>
-Ndarray<T>::Ndarray() {
+template<class T>
+Ndarray<T>::Ndarray(const AbstractTensor<T>& other)
+  : shape(other.getShape()),
+    data(flatSize())
+{
 }
 
-template <class T>
-Ndarray<T>::Ndarray(Ndarray& a)
-  : shape(a.shape),
-    data(a.data)
+template<class T>
+Ndarray<T>::Ndarray(const Indices& shape) 
+  : shape(shape),
+    data(flatSize())
 {}
 
-template <class T>
-Ndarray<T>::Ndarray(const std::vector<unsigned>& shape)
-  : shape(shape)
-{
-  size_t flat_size = std::accumulate(shape.begin(), shape.end(), 1, std::multiplies());
-  data.resize(flat_size);
+template<class T>
+Ndarray<T>::Ndarray() {
+
 }
 
 template <class T>
-Ndarray<T>::Ndarray(std::initializer_list<unsigned> shape)
-  : shape(shape)
-{
-  size_t flat_size = std::accumulate(shape.begin(), shape.end(), 1, std::multiplies());
-  data.resize(flat_size);
+Ndarray<T>::Indices Ndarray<T>::getShape() const {
+  return shape;
 }
 
-template <class T> 
-size_t Ndarray<T>::getPosition(const std::vector<unsigned>& indices) {
-  size_t buff = 0;
-  // will bug for some sizes e.g.
-  for (int i = 0; i < indices.size(); i++) {
-    buff += indices[i];
-    buff *= shape[i];
+template <class T>
+T& Ndarray<T>::at(const Indices& indicies) {
+  T* buff = new T();
+  return *buff;
+}
+
+template <class T>
+Ndarray<T>& Ndarray<T>::chunk(const Indices& from, const Indices& to) {
+  return *this;
+}
+
+template <class T>
+Ndarray<T>::Iterator Ndarray<T>::begin() {
+  return Iterator(&data[0]);
+}
+
+template <class T>
+Ndarray<T>::Iterator Ndarray<T>::end() {
+  return Iterator(&data[0] + data.size());
+}
+
+template <class T>
+void Ndarray<T>::add(AbstractTensor<T>& other) {
+}
+
+template <class T>
+size_t Ndarray<T>::getPosition(const Indices& indices) const {
+  size_t buff = indices[0];
+  for (int axis = 1; axis < shape.size(); axis++) {
+    buff *= shape[axis];
+    buff += indices[axis];
   }
   return buff;
 }
 
 template <class T>
-T& Ndarray<T>::at(const std::vector<unsigned>& indices) {
-  return data[getPosition(indices)];
+size_t Ndarray<T>::flatSize() const {
+  return std::accumulate(shape.begin(), shape.end(), 1, std::multiplies());
 }
 
 template <class T>
-Ndarray<T> Ndarray<T>::add(Ndarray<T>& other) {
-  Ndarray buff(*this);
+Ndarray<T>::Iterator::Iterator(T* ptr)
+  :ptr(ptr)
+{}
 
-  std::transform(
-    data.begin(), data.end(),
-    other.data.begin(),
-    buff.data.begin(),
-    std::plus()
-  );
-
-  return buff;
+template <class T>
+Ndarray<T>::Iterator Ndarray<T>::Iterator::operator++() {
+  ptr++;
+  return *this;
 }
 
 template <class T>
-Ndarray<T> Ndarray<T>::sub(Ndarray<T>& other) {
-  return Ndarray<T>{1, 2, 3};
+Ndarray<T>::Iterator Ndarray<T>::Iterator::operator++(int) {
+  auto temp = *this;
+  ptr++;
+  return temp;
 }
 
 template <class T>
-Ndarray<T> Ndarray<T>::mul(Ndarray<T>& other) {
-  return Ndarray<T>{1, 2, 3};
+Ndarray<T>::Iterator Ndarray<T>::Iterator::operator--() {
+  ptr--;
+  return *this;
 }
+
+template <class T>
+Ndarray<T>::Iterator Ndarray<T>::Iterator::operator--(int) {
+  auto temp = *this;
+  ptr--;
+  return temp;
+}
+
+template <class T>
+bool Ndarray<T>::Iterator::operator==(const Iterator& other) {
+  return ptr == other.ptr;
+}
+
+template <class T>
+bool Ndarray<T>::Iterator::operator!=(const Iterator& other) {
+  return ptr != other.ptr;
+}
+
 
 }
 }

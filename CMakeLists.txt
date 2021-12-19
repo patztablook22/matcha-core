@@ -26,6 +26,7 @@ target_sources(matcha
   PRIVATE
     src/matcha/model.cpp
     src/matcha/tensor.cpp
+    src/matcha/AbstractTensor.cpp
     src/matcha/backend/ndarray.cpp
 )
 
@@ -35,7 +36,6 @@ target_link_libraries(
   PRIVATE
     Boost::serialization
 )
-
 
 include(GNUInstallDirs)
 
