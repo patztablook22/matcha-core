@@ -33,7 +33,6 @@ void Model::train() {
 }
 
 void Model::eval() {
-  std::cout << "evaluating..." << std::endl;
 }
 
 template <class OStream>

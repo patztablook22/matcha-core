@@ -31,8 +31,7 @@ Ndarray<T>::Indices Ndarray<T>::getShape() const {
 
 template <class T>
 T& Ndarray<T>::at(const Indices& indicies) {
-  T* buff = new T();
-  return *buff;
+  return data[getPosition(indicies)];
 }
 
 template <class T>
@@ -41,21 +40,27 @@ Ndarray<T>& Ndarray<T>::chunk(const Indices& from, const Indices& to) {
 }
 
 template <class T>
-Ndarray<T>::Iterator Ndarray<T>::begin() {
-  return Iterator(&data[0]);
+matcha::AbstractTensor<T>::Iterator Ndarray<T>::begin() {
+  typename AbstractTensor<T>::Iterator iter(&data[0]);
+  return iter;
 }
 
 template <class T>
-Ndarray<T>::Iterator Ndarray<T>::end() {
-  return Iterator(&data[0] + data.size());
-}
-
-template <class T>
-void Ndarray<T>::add(AbstractTensor<T>& other) {
+matcha::AbstractTensor<T>::Iterator Ndarray<T>::end() {
+  typename AbstractTensor<T>::Iterator iter(&data[0] + data.size());
+  return iter;
 }
 
 template <class T>
 size_t Ndarray<T>::getPosition(const Indices& indices) const {
+  bool valid = std::all_of(indices.begin(), indices.end(), 
+    [this](int index) {
+      return index >= 0 && index < this->shape.size();
+    }
+  );
+
+  if (!valid) throw std::out_of_range("indices must be between 0 and dim - 1");
+
   size_t buff = indices[0];
   for (int axis = 1; axis < shape.size(); axis++) {
     buff *= shape[axis];
@@ -67,47 +72,6 @@ size_t Ndarray<T>::getPosition(const Indices& indices) const {
 template <class T>
 size_t Ndarray<T>::flatSize() const {
   return std::accumulate(shape.begin(), shape.end(), 1, std::multiplies());
-}
-
-template <class T>
-Ndarray<T>::Iterator::Iterator(T* ptr)
-  :ptr(ptr)
-{}
-
-template <class T>
-Ndarray<T>::Iterator Ndarray<T>::Iterator::operator++() {
-  ptr++;
-  return *this;
-}
-
-template <class T>
-Ndarray<T>::Iterator Ndarray<T>::Iterator::operator++(int) {
-  auto temp = *this;
-  ptr++;
-  return temp;
-}
-
-template <class T>
-Ndarray<T>::Iterator Ndarray<T>::Iterator::operator--() {
-  ptr--;
-  return *this;
-}
-
-template <class T>
-Ndarray<T>::Iterator Ndarray<T>::Iterator::operator--(int) {
-  auto temp = *this;
-  ptr--;
-  return temp;
-}
-
-template <class T>
-bool Ndarray<T>::Iterator::operator==(const Iterator& other) {
-  return ptr == other.ptr;
-}
-
-template <class T>
-bool Ndarray<T>::Iterator::operator!=(const Iterator& other) {
-  return ptr != other.ptr;
 }
 
 

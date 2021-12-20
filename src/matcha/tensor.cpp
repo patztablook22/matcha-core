@@ -9,11 +9,12 @@
 namespace matcha {
 
 template <class T>
-backend::Ndarray<T> tensor() {
-  return backend::Ndarray<T>();
+backend::Ndarray<T> tensor(std::vector<int> const& shape) {
+  std::vector<int> temp(shape);
+  return backend::Ndarray<T>(temp);
 }
 
-template backend::Ndarray<double> tensor();
-template backend::Ndarray<int   > tensor();
+template backend::Ndarray<double> tensor(std::vector<int> const& shape);
+template backend::Ndarray<int   > tensor(std::vector<int> const& shape);
 
 }
