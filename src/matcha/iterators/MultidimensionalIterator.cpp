@@ -12,6 +12,12 @@ AbstractTensor<T>::MultidimensionalIterator::MultidimensionalIterator(AbstractTe
     steps(getSteps(tensor.getShape()))
 {}
 
+// template <class T>
+// AbstractTensor<T>::MultidimensionalIterator::MultidimensionalIterator()
+// {
+
+// }
+
 template <class T>
 std::vector<size_t> AbstractTensor<T>::MultidimensionalIterator::getSteps(const Shape& shape) {
   std::vector<size_t> buff(shape.size(), 1);
@@ -34,32 +40,32 @@ void AbstractTensor<T>::MultidimensionalIterator::prevAlongAxis(int axis) {
 
 template <class T>
 void AbstractTensor<T>::MultidimensionalIterator::right() {
-  nextAlongAxis(steps.size());  
-}
-
-template <class T>
-void AbstractTensor<T>::MultidimensionalIterator::left() {
-  prevAlongAxis(steps.size());  
-}
-
-template <class T>
-void AbstractTensor<T>::MultidimensionalIterator::down() {
   nextAlongAxis(steps.size() - 1);  
 }
 
 template <class T>
-void AbstractTensor<T>::MultidimensionalIterator::up() {
+void AbstractTensor<T>::MultidimensionalIterator::left() {
   prevAlongAxis(steps.size() - 1);  
 }
 
 template <class T>
-void AbstractTensor<T>::MultidimensionalIterator::further() {
+void AbstractTensor<T>::MultidimensionalIterator::down() {
   nextAlongAxis(steps.size() - 2);  
 }
 
 template <class T>
-void AbstractTensor<T>::MultidimensionalIterator::closer() {
+void AbstractTensor<T>::MultidimensionalIterator::up() {
   prevAlongAxis(steps.size() - 2);  
+}
+
+template <class T>
+void AbstractTensor<T>::MultidimensionalIterator::further() {
+  nextAlongAxis(steps.size() - 3);  
+}
+
+template <class T>
+void AbstractTensor<T>::MultidimensionalIterator::closer() {
+  prevAlongAxis(steps.size() - 3);  
 }
 
 template <class T>
@@ -71,6 +77,12 @@ AbstractTensor<T>::LinearIterator AbstractTensor<T>::MultidimensionalIterator::o
 template <class T>
 AbstractTensor<T>::LinearIterator AbstractTensor<T>::MultidimensionalIterator::operator--() {
   left();
+  return *this;
+}
+
+template <class T>
+AbstractTensor<T>::MultidimensionalIterator& AbstractTensor<T>::MultidimensionalIterator::operator=(const AbstractTensor<T>::MultidimensionalIterator& other) {
+  AbstractTensor<T>::LinearIterator::ptr = other.ptr;
   return *this;
 }
 

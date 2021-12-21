@@ -8,6 +8,7 @@ template <class T>
 class AbstractTensor<T>::MultidimensionalIterator : public AbstractTensor<T>::LinearIterator {
   public:
     MultidimensionalIterator(AbstractTensor& tensor, const Indices& position);
+    MultidimensionalIterator();
     void nextAlongAxis(int axis);
     void prevAlongAxis(int axis);
 
@@ -20,6 +21,9 @@ class AbstractTensor<T>::MultidimensionalIterator : public AbstractTensor<T>::Li
 
     LinearIterator operator++() override;
     LinearIterator operator--() override;
+
+    MultidimensionalIterator& operator=(const MultidimensionalIterator& other);
+
   protected:
     AbstractTensor& tensor;
     const std::vector<size_t> steps;

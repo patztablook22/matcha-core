@@ -36,7 +36,7 @@ class AbstractTensor {
     virtual void multiply(AbstractTensor& other);
     virtual AbstractTensor& matmul(AbstractTensor& other) = 0;
 
-    class LinearIterator;
+    struct LinearIterator;
     class MultidimensionalIterator;
 
     virtual LinearIterator begin() = 0;

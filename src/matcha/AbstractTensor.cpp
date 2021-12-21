@@ -5,6 +5,7 @@
 #include <numeric>
 #include <assert.h>
 #include <list>
+#include <execution>
 
 #include <boost/serialization/vector.hpp>
 
@@ -31,7 +32,11 @@ AbstractTensor<T>::AbstractTensor() {}
 template <class T>
 void AbstractTensor<T>::add(AbstractTensor& other) {
   assert(getShape() == other.getShape());
-  std::transform(begin(), end(), other.begin(), begin(), std::plus());
+  std::transform(
+    // std::execution::par,
+    begin(), end(), other.begin(), begin(),
+    std::plus()
+  );
 }
 
 template <class T>

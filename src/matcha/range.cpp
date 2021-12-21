@@ -14,9 +14,9 @@ void Range::represent(const Shape& shape) {
   for (int i = 0; i < shape.size(); i++) {
     int& f = from[i];
     int& s = size[i];
-    unsigned axis = shape[i];
+    int axis = shape[i];
 
-    assert(f > axis);
+    assert(f > -axis);
     assert(f < axis);
     assert(s > -axis);
     assert(s <= axis);

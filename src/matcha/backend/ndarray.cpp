@@ -4,6 +4,7 @@
 #include <numeric>
  
 #include "matcha/iterators/LinearIterator.h" 
+#include "matcha/iterators/MultidimensionalIterator.h" 
 
 namespace matcha {
 namespace backend {
@@ -56,18 +57,67 @@ T& Ndarray<T>::at(const size_t position) {
 
 template <class T>
 Ndarray<T>& Ndarray<T>::chunk(const Range& range) {
-  return *this;
+  Range r = range;
+  auto sh = getShape();
+  r.represent(sh);
+  Shape subsh(r.size.begin(), r.size.end());
+  Shape remaining(subsh);
+  
+  auto* buff = new Ndarray<T>(subsh);
+  auto& target = *buff;
+
+  class AbstractTensor<T>::MultidimensionalIterator sourceBegin(*this, r.from);
+  std::vector<class AbstractTensor<T>::MultidimensionalIterator> sourceIters(
+    sh.size(),
+    sourceBegin
+  );
+  auto targetIter = target.begin();
+
+  int axes = sh.size();
+  int axis = axes - 1;
+  while (axis >= 0) {
+    // std::cout << "axis " << axis
+    //           << "; remaining " << remaining[axis] 
+    //           << "; source " << *sourceIters[axis] 
+    //           << "; ";
+    if (axis == axes - 1) {
+        std::cout << axis << std::endl;
+      *targetIter = *sourceIters[axis];
+      targetIter++;
+      sourceIters[axis].right();
+      remaining[axis]--;
+      if (remaining[axis] == 0) {
+        axis--;
+      }
+    } else {
+    std::cout << axis << std::endl;
+      remaining[axis]--;
+      if (remaining[axis] == 0) {
+        axis--;
+      } else {
+        std::cout << axis << std::endl;
+        sourceIters[axis].nextAlongAxis(axis);
+        for (int a = axis + 1; a < axes; a++) {
+          sourceIters[a] = sourceIters[axis];
+          remaining[a] = subsh[a];
+        }
+        axis = axes - 1;
+      }
+    }
+  }
+  
+  return target;
 }
 
 template <class T>
 AbstractTensor<T>::LinearIterator Ndarray<T>::begin() {
-  typename AbstractTensor<T>::LinearIterator iter(&data[0]);
+  class AbstractTensor<T>::LinearIterator iter(&data[0]);
   return iter;
 }
 
 template <class T>
 AbstractTensor<T>::LinearIterator Ndarray<T>::end() {
-  typename AbstractTensor<T>::LinearIterator iter(&data[0] + data.size());
+  class AbstractTensor<T>::LinearIterator iter(&data[0] + data.size());
   return iter;
 }
 
