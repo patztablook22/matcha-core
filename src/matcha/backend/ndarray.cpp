@@ -2,6 +2,8 @@
 
 #include <algorithm>
 #include <numeric>
+ 
+#include "matcha/iterators/LinearIterator.h" 
 
 namespace matcha {
 namespace backend {
@@ -58,14 +60,14 @@ Ndarray<T>& Ndarray<T>::chunk(const Range& range) {
 }
 
 template <class T>
-AbstractTensor<T>::Iterator Ndarray<T>::begin() {
-  typename AbstractTensor<T>::Iterator iter(&data[0]);
+AbstractTensor<T>::LinearIterator Ndarray<T>::begin() {
+  typename AbstractTensor<T>::LinearIterator iter(&data[0]);
   return iter;
 }
 
 template <class T>
-AbstractTensor<T>::Iterator Ndarray<T>::end() {
-  typename AbstractTensor<T>::Iterator iter(&data[0] + data.size());
+AbstractTensor<T>::LinearIterator Ndarray<T>::end() {
+  typename AbstractTensor<T>::LinearIterator iter(&data[0] + data.size());
   return iter;
 }
 

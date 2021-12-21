@@ -26,6 +26,8 @@ target_sources(matcha
   PRIVATE
     src/matcha/model.cpp
     src/matcha/range.cpp
+    src/matcha/iterators/LinearIterator.cpp
+    src/matcha/iterators/MultidimensionalIterator.cpp
     src/matcha/AbstractTensor.cpp
     src/matcha/backend/ndarray.cpp
 )

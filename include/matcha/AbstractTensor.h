@@ -36,9 +36,11 @@ class AbstractTensor {
     virtual void multiply(AbstractTensor& other);
     virtual AbstractTensor& matmul(AbstractTensor& other) = 0;
 
-    class Iterator;
-    virtual Iterator begin() = 0;
-    virtual Iterator end()   = 0;
+    class LinearIterator;
+    class MultidimensionalIterator;
+
+    virtual LinearIterator begin() = 0;
+    virtual LinearIterator end()   = 0;
 
     virtual size_t flatSize() const = 0;
 
@@ -50,20 +52,6 @@ class AbstractTensor {
 
 };
 
-template <class T>
-class AbstractTensor<T>::Iterator {
-  public:
-    Iterator(T* ptr);
-    Iterator operator++();
-    Iterator operator++(int);
-    Iterator operator--();
-    Iterator operator--(int);
-    T& operator*();
-    bool operator==(const Iterator& other);
-    bool operator!=(const Iterator& other);
-  private:
-    T* ptr;
-};
 
 template class AbstractTensor<double>;
 template class AbstractTensor<int   >;
@@ -72,3 +60,5 @@ template <class T>
 std::ostream& operator<<(std::ostream& os, AbstractTensor<T>& t);
 
 }
+
+// #include "matcha/iterators/LinearIterator.h"

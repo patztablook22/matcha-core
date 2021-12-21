@@ -8,6 +8,8 @@
 
 #include <boost/serialization/vector.hpp>
 
+#include "matcha/iterators/LinearIterator.h"
+
 namespace matcha {
 
 
@@ -45,48 +47,48 @@ void AbstractTensor<T>::multiply(AbstractTensor& other) {
 }
 
 template <class T>
-AbstractTensor<T>::Iterator::Iterator(T* ptr)
+AbstractTensor<T>::LinearIterator::LinearIterator(T* ptr)
   :ptr(ptr)
 {}
 
 template <class T>
-AbstractTensor<T>::Iterator AbstractTensor<T>::Iterator::operator++() {
+AbstractTensor<T>::LinearIterator AbstractTensor<T>::LinearIterator::operator++() {
   ptr++;
   return *this;
 }
 
 template <class T>
-AbstractTensor<T>::Iterator AbstractTensor<T>::Iterator::operator++(int) {
+AbstractTensor<T>::LinearIterator AbstractTensor<T>::LinearIterator::operator++(int) {
   auto temp = *this;
   ptr++;
   return temp;
 }
 
 template <class T>
-AbstractTensor<T>::Iterator AbstractTensor<T>::Iterator::operator--() {
+AbstractTensor<T>::LinearIterator AbstractTensor<T>::LinearIterator::operator--() {
   ptr--;
   return *this;
 }
 
 template <class T>
-AbstractTensor<T>::Iterator AbstractTensor<T>::Iterator::operator--(int) {
+AbstractTensor<T>::LinearIterator AbstractTensor<T>::LinearIterator::operator--(int) {
   auto temp = *this;
   ptr--;
   return temp;
 }
 
 template <class T>
-bool AbstractTensor<T>::Iterator::operator==(const Iterator& other) {
+bool AbstractTensor<T>::LinearIterator::operator==(const LinearIterator& other) {
   return ptr == other.ptr;
 }
 
 template <class T>
-bool AbstractTensor<T>::Iterator::operator!=(const Iterator& other) {
+bool AbstractTensor<T>::LinearIterator::operator!=(const LinearIterator& other) {
   return ptr != other.ptr;
 }
 
 template <class T>
-T& AbstractTensor<T>::Iterator::operator*() {
+T& AbstractTensor<T>::LinearIterator::operator*() {
   return *ptr;
 }
 

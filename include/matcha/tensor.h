@@ -5,6 +5,9 @@
 #include <initializer_list>
 
 #include "matcha/AbstractTensor.h"
+#include "matcha/iterators/LinearIterator.h"
+#include "matcha/iterators/MultidimensionalIterator.h"
+
 #include "matcha/backend/ndarray.h"
 
 namespace matcha {

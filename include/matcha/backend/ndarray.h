@@ -24,8 +24,8 @@ class Ndarray : public AbstractTensor<T> {
     T& at(const size_t position)  override;
     Ndarray<T>& chunk(const Range& range) override;
 
-    AbstractTensor<T>::Iterator begin();
-    AbstractTensor<T>::Iterator end();
+    AbstractTensor<T>::LinearIterator begin();
+    AbstractTensor<T>::LinearIterator end();
 
     Ndarray<T>& matmul(AbstractTensor<T>& other) override;
 
