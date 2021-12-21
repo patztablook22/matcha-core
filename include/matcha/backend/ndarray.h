@@ -8,32 +8,39 @@
 namespace matcha {
 namespace backend {
 
-template <class T>
+template <class T = double>
 class Ndarray : public AbstractTensor<T> {
-
-  using Indices = std::vector<int>;
 
   public:
     Ndarray(const AbstractTensor<T>& other);
-    Ndarray(const Indices& shape);
+    Ndarray(const Shape& shape, const std::vector<T>& data);
+    Ndarray(const Shape& shape);
+    Ndarray(ShapeInit shape);
     Ndarray();
 
-    Indices getShape() const override;
+    Shape getShape() const override;
 
     T& at(const Indices& indices) override;
-    Ndarray<T>& chunk(const Indices& from, const Indices& to) override;
+    T& at(const size_t position)  override;
+    Ndarray<T>& chunk(const Range& range) override;
 
-    class Iterator;
-    matcha::AbstractTensor<T>::Iterator begin();
-    matcha::AbstractTensor<T>::Iterator end();
+    AbstractTensor<T>::Iterator begin();
+    AbstractTensor<T>::Iterator end();
+
+    Ndarray<T>& matmul(AbstractTensor<T>& other) override;
+
+    static Ndarray<T> constant(const Shape& shape, const T& value);
+    static Ndarray<T> ones(const Shape& shape);
+    static Ndarray<T> ones(ShapeInit shape);
+
+    size_t flatSize() const override;
 
   private:
-    Indices shape;
+    Shape shape;
     std::vector<T> data;
 
   private:
     size_t getPosition(const Indices& indices) const;
-    size_t flatSize() const;
     
 };
 

@@ -25,11 +25,10 @@ target_include_directories(${PROJECT_NAME}
 target_sources(matcha
   PRIVATE
     src/matcha/model.cpp
-    src/matcha/tensor.cpp
+    src/matcha/range.cpp
     src/matcha/AbstractTensor.cpp
     src/matcha/backend/ndarray.cpp
 )
-
 
 target_link_libraries(
   ${PROJECT_NAME}

@@ -9,9 +9,10 @@
 
 namespace matcha {
 
-template<class T = double>
-backend::Ndarray<T> tensor(std::vector<int> const& shape);
-// template<class T = double>
-// backend::Ndarray<T>& tensor(std::initializer_list<unsigned> shape);
+// target tensor is expected to have a default type
+// using Tensor = backend::Ndarray<double>;
+
+template <class T = double>
+using Tensor = backend::Ndarray<T>;
 
 }

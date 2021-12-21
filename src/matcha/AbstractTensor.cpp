@@ -4,19 +4,27 @@
 #include <algorithm>
 #include <numeric>
 #include <assert.h>
+#include <list>
 
+#include <boost/serialization/vector.hpp>
 
 namespace matcha {
 
-template <class T>
-AbstractTensor<T>::AbstractTensor() {
-
-}
 
 template <class T>
-AbstractTensor<T>::AbstractTensor(const AbstractTensor& other) {
+AbstractTensor<T>::AbstractTensor(const AbstractTensor& other) {}
 
-}
+template <class T>
+AbstractTensor<T>::AbstractTensor(const Shape& shape, const std::vector<T>& data) {}
+
+template <class T>
+AbstractTensor<T>::AbstractTensor(const Shape& shape) {}
+
+template <class T>
+AbstractTensor<T>::AbstractTensor(ShapeInit shape) {}
+
+template <class T>
+AbstractTensor<T>::AbstractTensor() {}
 
 template <class T>
 void AbstractTensor<T>::add(AbstractTensor& other) {
@@ -112,7 +120,44 @@ std::ostream& operator<<(std::ostream& os, AbstractTensor<T>& t) {
   return os;
 }
 
+template <class T> template <class Archive>
+void AbstractTensor<T>::serialize(Archive& ar, const unsigned int version) {
+  Shape buffShape(getShape());
+  std::vector<T> buffData(flatSize());
+  auto iterFrom = begin();
+  auto iterTo   = buffData.begin();
+  while (iterFrom != end()) {
+    *iterTo = *iterFrom;
+    iterFrom++;
+    iterTo  ++;
+  }
+  ar & buffShape;
+  ar & buffData;
+  iterFrom = begin();
+  iterTo   = buffData.begin();
+  while (iterFrom != end()) {
+    *iterFrom = *iterTo;
+    iterFrom++;
+    iterTo  ++;
+  }
+}
+
 template std::ostream& operator<<(std::ostream& os, AbstractTensor<double>& t);
 template std::ostream& operator<<(std::ostream& os, AbstractTensor<int   >& t);
+
+template void AbstractTensor<double>::serialize<boost::archive::text_oarchive>(boost::archive::text_oarchive& ar, const unsigned int);
+template void AbstractTensor<int   >::serialize<boost::archive::text_oarchive>(boost::archive::text_oarchive& ar, const unsigned int);
+template void AbstractTensor<double>::serialize<boost::archive::text_iarchive>(boost::archive::text_iarchive& ar, const unsigned int);
+template void AbstractTensor<int   >::serialize<boost::archive::text_iarchive>(boost::archive::text_iarchive& ar, const unsigned int);
+
+template void AbstractTensor<double>::serialize<boost::archive::binary_oarchive>(boost::archive::binary_oarchive& ar, const unsigned int);
+template void AbstractTensor<int   >::serialize<boost::archive::binary_oarchive>(boost::archive::binary_oarchive& ar, const unsigned int);
+template void AbstractTensor<double>::serialize<boost::archive::binary_iarchive>(boost::archive::binary_iarchive& ar, const unsigned int);
+template void AbstractTensor<int   >::serialize<boost::archive::binary_iarchive>(boost::archive::binary_iarchive& ar, const unsigned int);
+
+// template void AbstractTensor<double>::serialize<boost::archive::xml_oarchive>(boost::archive::xml_oarchive& ar, const unsigned int);
+// template void AbstractTensor<int   >::serialize<boost::archive::xml_oarchive>(boost::archive::xml_oarchive& ar, const unsigned int);
+// template void AbstractTensor<double>::serialize<boost::archive::xml_iarchive>(boost::archive::xml_iarchive& ar, const unsigned int);
+// template void AbstractTensor<int   >::serialize<boost::archive::xml_iarchive>(boost::archive::xml_iarchive& ar, const unsigned int);
 
 }

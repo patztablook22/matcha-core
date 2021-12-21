@@ -7,6 +7,8 @@
 
 #include <boost/serialization/access.hpp>
 
+#include "matcha/AbstractTensor.h"
+
 namespace matcha {
 
 
@@ -16,6 +18,7 @@ class Model {
     Estimator estimator;
 
   public:
+    AbstractTensor<double>* tensor;
     // constructors
     Model(Transformer transformer, Estimator estimator);
     Model(Transformer transformer);
@@ -41,10 +44,11 @@ class Model {
     static Model load(const char* filepath);
   
   private:
-    friend class ::boost::serialization::access;
+    friend class boost::serialization::access;
 
     template <class Archive>
     void serialize(Archive& ar, const unsigned int version);
+    void initTensor();
 };
 
 }
