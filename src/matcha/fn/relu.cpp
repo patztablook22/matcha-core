@@ -1,0 +1,15 @@
+#include "matcha/fn/relu.h"
+
+namespace matcha {
+namespace fn {
+
+ReLU::ReLU(TIn a) 
+  : ElementWiseUnary(a)
+{}
+
+float ReLU::runElement(float a) {
+  return a > 0 ? a : 0;
+}
+
+}
+}

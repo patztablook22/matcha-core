@@ -11,6 +11,7 @@ add_compile_definitions(_GLIBCXX_USE_CXX11_ABI=1)
 set(CMAKE_INSTALL_PREFIX /home/patz/Heap/matcha/install)
 
 add_library(${PROJECT_NAME} SHARED)
+add_executable(main src/main.cpp)
 
 # dependencies
 # reeeeeeeeeeEEEEEEEEEEEEEEEEEEE
@@ -24,18 +25,47 @@ target_include_directories(${PROJECT_NAME}
 
 target_sources(matcha
   PRIVATE
-    src/matcha/model.cpp
-    src/matcha/range.cpp
-    src/matcha/iterators/LinearIterator.cpp
-    src/matcha/iterators/MultidimensionalIterator.cpp
-    src/matcha/AbstractTensor.cpp
-    src/matcha/backend/ndarray.cpp
+    src/matcha/tensor.cpp
+    src/matcha/tio.cpp
+
+    src/matcha/iterators/flatiterator.cpp
+    src/matcha/iterations/flatiteration.cpp
+
+    src/matcha/fn/fn.cpp
+    src/matcha/fn/elementwiseunary.cpp
+    src/matcha/fn/elementwisebinary.cpp
+
+    src/matcha/fn/add.cpp
+    src/matcha/fn/subtract.cpp
+    src/matcha/fn/multiply.cpp
+    src/matcha/fn/divide.cpp
+
+    src/matcha/fn/square.cpp
+    src/matcha/fn/pow.cpp
+    src/matcha/fn/exp.cpp
+
+    src/matcha/fn/sum.cpp
+    src/matcha/fn/max.cpp
+
+    src/matcha/fn/softmax.cpp
+    src/matcha/fn/relu.cpp
 )
 
 target_link_libraries(
   ${PROJECT_NAME}
   PRIVATE
     Boost::serialization
+)
+
+target_link_libraries(
+  main
+  ${PROJECT_NAME}
+)
+
+target_include_directories(
+  main
+  PRIVATE
+  include/
 )
 
 include(GNUInstallDirs)
