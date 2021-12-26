@@ -5,30 +5,20 @@
 
 namespace matcha {
 
-template <class T>
+template <class T, class Access = Tensor>
 class FlatIteration {
   public:
-    FlatIteration(Tensor& tensor);
+    FlatIteration(Access& tensor);
     FlatIterator<T> begin();
     FlatIterator<T> end();
   private:
-    Tensor* tensor_;
+    Access& tensor_;
 };
 
-template class FlatIteration<float>;
-template class FlatIteration<int  >;
+template class FlatIteration<float, Tensor>;
+template class FlatIteration<int  , Tensor>;
 
-template <class T>
-class ConstFlatIteration {
-  public:
-    ConstFlatIteration(const Tensor& tensor);
-    FlatIterator<const T> begin();
-    FlatIterator<const T> end();
-  private:
-    const Tensor* tensor_;
-};
-
-template class ConstFlatIteration<float>;
-template class ConstFlatIteration<int  >;
+template class FlatIteration<const float, const Tensor>;
+template class FlatIteration<const int  , const Tensor>;
 
 };

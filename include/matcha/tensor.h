@@ -10,7 +10,7 @@
 
 namespace matcha {
 
-class TOut;
+class Tout;
 
 namespace fn {
   class Fn;
@@ -20,6 +20,9 @@ class Tensor {
   public:
     // scalar
     Tensor(float value);
+
+    // from tensors
+    Tensor(std::initializer_list<Tensor> tensors);
 
     Tensor(Dtype dtype, const Shape& shape, const Buffer& buffer);
     Tensor(Dtype dtype, const Shape& shape);
@@ -31,22 +34,26 @@ class Tensor {
 
     // convenience initializers
     Tensor(std::initializer_list<float> elements);
-    // Tensor(std::initializer_list<int  > elements);
     Tensor(std::initializer_list<std::initializer_list<float>> elements);
-    // Tensor(std::initializer_list<std::initializer_list<int  >> elements);
+    Tensor(std::initializer_list<std::initializer_list<std::initializer_list<float>>> elements);
 
     // Tensor(const Edge& edge); // bind to given output edge
-    Tensor(const TOut& tout);
-    Tensor(TOut& tout);
+    Tensor(const Tout& tout);
+    Tensor(Tout& tout);
     Tensor(fn::Fn& fn);
 
     // assign
     Tensor& operator=(const float value);
 
-    Tensor& get(std::vector<Index> indices);
+    // Tensor& get(std::vector<Index> indices);
 
     const Shape& shape() const;
     void reshape(const Shape& shape);
+
+    template <class T = void> T* at(size_t position);
+    template <class T = void> T* at(const std::vector<int>& indices);
+    template <class T = void> const T* get(size_t position) const;
+    template <class T = void> const T* get(const std::vector<int>& indices) const;
 
     bool scalar() const;
     unsigned rank() const;
@@ -57,6 +64,9 @@ class Tensor {
     void update();
     bool updated() const;
 
+    size_t positionOf(const std::vector<int>& indices) const;
+    std::vector<int> indicesOf(size_t position) const;
+
   protected:
     friend std::ostream& operator<<(std::ostream& os, const Tensor& tensor);
     Dtype  dtype_;
@@ -66,8 +76,8 @@ class Tensor {
     Buffer buffer_;
     unsigned bytesPerElement_;
 
-    template <class T> friend class FlatIteration;
-    template <class T> friend class ConstFlatIteration;
+    template <class T, class Access> friend class FlatIteration;
+    template <class T, class Access> friend class AxisIteration;
 
   public:
     bool updated_;
@@ -79,7 +89,8 @@ class Tensor {
     template <class T>
     void buildFrom(const std::vector<T>& elements, unsigned bytesPerElement);
     unsigned bytesPerElement() const;
-    // size_t bytesPerElement() const;
+    unsigned bytesPerElement(Dtype dtype) const;
+    std::vector<size_t> stepSizes() const;
   
   public:
     std::string mark;

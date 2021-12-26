@@ -38,7 +38,7 @@ unsigned Fn::outputs() const {
   return outputs_.size();
 }
 
-TOut& Fn::output(unsigned index) {
+Tout& Fn::output(unsigned index) {
   return outputs_[index];
 }
 

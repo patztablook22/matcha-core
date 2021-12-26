@@ -7,8 +7,8 @@ namespace fn {
 
 class Max : public Fn {
   public:
-    Max(TIn a);
-    // Max(TIn a, int alongAxis);
+    Max(Tin a);
+    // Max(Tin a, int alongAxis);
 
   protected:
     void run() override;

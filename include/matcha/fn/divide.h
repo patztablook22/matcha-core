@@ -7,7 +7,7 @@ namespace fn {
 
 class Divide : public ElementWiseBinary {
   public:
-    Divide(TIn a, TIn b);
+    Divide(Tin a, Tin b);
   
   private:
     float runElement(float a, float b) override;

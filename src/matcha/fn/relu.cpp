@@ -3,7 +3,7 @@
 namespace matcha {
 namespace fn {
 
-ReLU::ReLU(TIn a) 
+ReLU::ReLU(Tin a) 
   : ElementWiseUnary(a)
 {}
 

@@ -5,7 +5,7 @@
 namespace matcha {
 namespace fn {
 
-Exp::Exp(TIn a) 
+Exp::Exp(Tin a) 
   : ElementWiseUnary(a)
 {}
 

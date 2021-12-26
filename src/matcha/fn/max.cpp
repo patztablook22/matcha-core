@@ -7,7 +7,7 @@
 namespace matcha {
 namespace fn {
 
-Max::Max(TIn a) {
+Max::Max(Tin a) {
   inputs_.push_back(a);
   outputs_.push_back(
     new Tensor(a.tensor->dtype(), {})
@@ -16,7 +16,7 @@ Max::Max(TIn a) {
 }
 
 void Max::run() {
-  ConstFlatIteration<float> a(*inputs_[0].tensor);
+  FlatIteration<const float, const Tensor> a(*inputs_[0].tensor);
   FlatIteration<float> result(*outputs_[0].tensor);
   *result.begin() = *std::max_element(a.begin(), a.end());
 }

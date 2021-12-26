@@ -7,7 +7,7 @@ namespace fn {
 
 class ElementWiseBinary : public Fn {
   public:
-    ElementWiseBinary(TIn a, TIn b);
+    ElementWiseBinary(Tin a, Tin b);
   
   protected:
     void run() override;

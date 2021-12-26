@@ -7,7 +7,7 @@ namespace fn {
 
 class Square : public ElementWiseUnary {
   public:
-    Square(TIn a);
+    Square(Tin a);
   
   private:
     float runElement(float a) override;

@@ -3,7 +3,7 @@
 namespace matcha {
 namespace fn {
 
-Divide::Divide(TIn a, TIn b) 
+Divide::Divide(Tin a, Tin b) 
   : ElementWiseBinary(a, b)
 {}
 

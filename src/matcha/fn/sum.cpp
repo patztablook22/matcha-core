@@ -7,7 +7,7 @@
 namespace matcha {
 namespace fn {
 
-Sum::Sum(TIn a) {
+Sum::Sum(Tin a) {
   inputs_.push_back(a);
   outputs_.push_back(
     new Tensor(a.tensor->dtype(), {})
@@ -16,7 +16,7 @@ Sum::Sum(TIn a) {
 }
 
 void Sum::run() {
-  ConstFlatIteration<float> a(*inputs_[0].tensor);
+  FlatIteration<const float, const Tensor> a(*inputs_[0].tensor);
   FlatIteration<float> result(*outputs_[0].tensor);
   *result.begin() = std::accumulate(a.begin(), a.end(), .0);
 }

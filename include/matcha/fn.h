@@ -5,6 +5,8 @@
 #include "matcha/fn/multiply.h"
 #include "matcha/fn/divide.h"
 
+#include "matcha/fn/matmul.h"
+
 #include "matcha/fn/square.h"
 #include "matcha/fn/pow.h"
 #include "matcha/fn/exp.h"

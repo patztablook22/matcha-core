@@ -28,8 +28,10 @@ target_sources(matcha
     src/matcha/tensor.cpp
     src/matcha/tio.cpp
 
-    src/matcha/iterators/flatiterator.cpp
     src/matcha/iterations/flatiteration.cpp
+    src/matcha/iterations/axisiteration.cpp
+    src/matcha/iterators/flatiterator.cpp
+    src/matcha/iterators/axisiterator.cpp
 
     src/matcha/fn/fn.cpp
     src/matcha/fn/elementwiseunary.cpp
@@ -39,6 +41,8 @@ target_sources(matcha
     src/matcha/fn/subtract.cpp
     src/matcha/fn/multiply.cpp
     src/matcha/fn/divide.cpp
+
+    src/matcha/fn/matmul.cpp
 
     src/matcha/fn/square.cpp
     src/matcha/fn/pow.cpp

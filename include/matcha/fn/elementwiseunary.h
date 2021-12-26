@@ -7,7 +7,7 @@ namespace fn {
 
 class ElementWiseUnary : public Fn {
   public:
-    ElementWiseUnary(TIn a);
+    ElementWiseUnary(Tin a);
   
   protected:
     void run() override;

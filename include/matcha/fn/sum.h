@@ -7,8 +7,8 @@ namespace fn {
 
 class Sum : public Fn {
   public:
-    Sum(TIn a);
-    // Sum(TIn a, int alongAxis);
+    Sum(Tin a);
+    // Sum(Tin a, int alongAxis);
 
   protected:
     void run() override;

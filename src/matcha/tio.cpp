@@ -2,26 +2,26 @@
 
 namespace matcha {
 
-TIn::TIn(const Tensor& value)
+Tin::Tin(const Tensor& value)
   : tensor(new Tensor(value)),
     referenced(false)
 {}
 
-TIn::TIn(const float scalar)
+Tin::Tin(const float scalar)
   : tensor(new Tensor(scalar)),
     referenced(false)
 {}
 
-TIn::TIn(Tensor* pointer) 
+Tin::Tin(Tensor* pointer) 
   : tensor(pointer),
     referenced(true)
 {}
 
-TIn::TIn(TOut& tout)
+Tin::Tin(Tout& tout)
   : tensor(tout.tensor)
 {}
 
-TOut::TOut(Tensor* pointer)
+Tout::Tout(Tensor* pointer)
   : tensor(pointer),
     referenced(true)
 {}

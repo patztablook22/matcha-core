@@ -7,7 +7,7 @@ namespace fn {
 
 class Multiply : public ElementWiseBinary {
   public:
-    Multiply(TIn a, TIn b);
+    Multiply(Tin a, Tin b);
   
   private:
     float runElement(float a, float b) override;

@@ -4,7 +4,7 @@
 namespace matcha {
 namespace fn {
 
-Pow::Pow(TIn a, TIn exponent) 
+Pow::Pow(Tin a, Tin exponent) 
   : ElementWiseBinary(a, exponent)
 {}
 

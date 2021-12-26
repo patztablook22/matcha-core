@@ -5,24 +5,23 @@
 
 namespace matcha {
 
-struct TIn {
-  TIn(const Tensor& value);
-  TIn(const float scalar);
-  TIn(Tensor* pointer);
-  TIn(TOut& tout);
+struct Tin {
+  Tin(const Tensor& value);
+  Tin(const float scalar);
+  Tin(Tensor* pointer);
+  Tin(Tout& tout);
 
   Tensor* tensor;
   bool referenced;
 
 };
 
-struct TOut {
-  TOut(const Tensor& value);
-  TOut(Tensor* pointer);
+struct Tout {
+  Tout(const Tensor& value);
+  Tout(Tensor* pointer);
 
   Tensor* tensor;
   bool referenced;
 };
-
 
 }

@@ -9,7 +9,7 @@
 namespace matcha {
 namespace fn {
 
-Softmax::Softmax(TIn a) {
+Softmax::Softmax(Tin a) {
   inputs_.push_back(a);
   outputs_.push_back(
     new Tensor(a.tensor->dtype(), a.tensor->shape())

@@ -7,7 +7,7 @@ namespace fn {
 
 class Add : public ElementWiseBinary {
   public:
-    Add(TIn a, TIn b);
+    Add(Tin a, Tin b);
   
   private:
     float runElement(float a, float b) override;

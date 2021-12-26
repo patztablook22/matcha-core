@@ -3,7 +3,7 @@
 namespace matcha {
 namespace fn {
 
-Square::Square(TIn a) 
+Square::Square(Tin a) 
   : ElementWiseUnary(a)
 {}
 

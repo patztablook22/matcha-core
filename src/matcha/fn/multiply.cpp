@@ -3,7 +3,7 @@
 namespace matcha {
 namespace fn {
 
-Multiply::Multiply(TIn a, TIn b) 
+Multiply::Multiply(Tin a, Tin b) 
   : ElementWiseBinary(a, b)
 {}
 

@@ -11,7 +11,7 @@
 namespace matcha {
 namespace fn {
 
-ElementWiseBinary::ElementWiseBinary(TIn a, TIn b) {
+ElementWiseBinary::ElementWiseBinary(Tin a, Tin b) {
   if (a.tensor->scalar()) std::swap(a, b);
   assert(a.tensor->shape() == b.tensor->shape() || b.tensor->scalar());
   inputs_.push_back(a);
@@ -23,8 +23,8 @@ ElementWiseBinary::ElementWiseBinary(TIn a, TIn b) {
 }
 
 void ElementWiseBinary::run() {
-  ConstFlatIteration<float> a(*inputs_[0].tensor);
-  ConstFlatIteration<float> b(*inputs_[1].tensor);
+  FlatIteration<const float, const Tensor> a(*inputs_[0].tensor);
+  FlatIteration<const float, const Tensor> b(*inputs_[1].tensor);
   FlatIteration<float> result(*outputs_[0].tensor);
 
   if (inputs_[1].tensor->scalar()) {

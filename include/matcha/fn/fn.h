@@ -15,7 +15,7 @@ namespace fn {
 class Fn {
   public:
     Fn();
-    TOut& output(unsigned index);
+    Tout& output(unsigned index);
     unsigned outputs() const;
 
     void propagateRequired();
@@ -29,8 +29,8 @@ class Fn {
 
   protected:
     bool updated_;
-    std::vector<TIn> inputs_;
-    std::vector<TOut> outputs_;
+    std::vector<Tin> inputs_;
+    std::vector<Tout> outputs_;
 
   protected:
     virtual void run() = 0;

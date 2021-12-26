@@ -7,7 +7,7 @@ namespace fn {
 
 class Softmax : public Fn {
   public:
-    Softmax(TIn a);
+    Softmax(Tin a);
 
   protected:
     void run() override;

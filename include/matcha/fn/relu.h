@@ -7,7 +7,7 @@ namespace fn {
 
 class ReLU : public ElementWiseUnary {
   public:
-    ReLU(TIn a);
+    ReLU(Tin a);
 
   protected:
     float runElement(float a) override;

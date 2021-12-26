@@ -3,7 +3,7 @@
 namespace matcha {
 namespace fn {
 
-Subtract::Subtract(TIn a, TIn b) 
+Subtract::Subtract(Tin a, Tin b) 
   : ElementWiseBinary(a, b)
 {}
 

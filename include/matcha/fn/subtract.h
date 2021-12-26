@@ -8,7 +8,7 @@ namespace fn {
 
 class Subtract : public ElementWiseBinary {
   public:
-    Subtract(TIn a, TIn b);
+    Subtract(Tin a, Tin b);
   
   private:
     float runElement(float a, float b) override;

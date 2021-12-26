@@ -7,7 +7,7 @@ namespace fn {
 
 class Exp : public ElementWiseUnary {
   public:
-    Exp(TIn a);
+    Exp(Tin a);
 
   protected:
     float runElement(float a) override;
