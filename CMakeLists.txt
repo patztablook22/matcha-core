@@ -53,6 +53,14 @@ target_sources(matcha
 
     src/matcha/fn/softmax.cpp
     src/matcha/fn/relu.cpp
+
+    src/matcha/fn/accuracy.cpp
+
+    src/matcha/data/batch.cpp
+    src/matcha/data/batches.cpp
+    src/matcha/data/instance.cpp
+
+    src/matcha/dataset/csv.cpp
 )
 
 target_link_libraries(

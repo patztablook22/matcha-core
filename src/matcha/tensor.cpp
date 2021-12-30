@@ -9,6 +9,9 @@
 
 namespace matcha {
 
+Tensor::Tensor() {
+}
+
 Tensor::Tensor(float value)
   : dtype_(Dtype::Float),
     shape_(),
@@ -200,6 +203,10 @@ void Tensor::reshape(const Shape& shape) {
   size_t newFlatSize = std::accumulate(shape.begin(), shape.end(), 1, std::multiplies());
   assert(newFlatSize == oldFlatSize);
   shape_ = shape;
+}
+
+bool Tensor::null() const {
+  return buffer_.size() == 0;
 }
 
 bool Tensor::scalar() const {

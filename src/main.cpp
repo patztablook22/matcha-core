@@ -1,16 +1,25 @@
-#include "matcha/tensor.h"
-#include "matcha/fn.h"
-#include "matcha/iterations/flatiteration.h"
-
-using namespace matcha;
-using namespace matcha::fn;
-
-#include <random>
+#include <iostream>
+#include <matcha.h>
 
 int main() {
+  using namespace matcha;
 
-  std::random_device rd;
-  std::mt19937 rng(rd());
-  std::normal_distribution<float> gaussian(0, 1);
+  auto ds = dataset::Csv("/home/patz/Downloads/mnist_train.csv");
+  data::Batches batches(ds, 7);
 
+  while (auto batch = batches.next()) {
+    while (auto instance = batch.next()) {
+      auto& [data, target] = instance;
+    }
+  }
+
+
+
+  // {
+  //   auto a = Fn(Val(3));
+  //   cout << "should survive" << endl;
+  // }
+  // cout << "shouldn't survive" << endl;
+  
+  // return 0;
 }

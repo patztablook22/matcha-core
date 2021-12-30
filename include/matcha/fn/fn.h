@@ -18,9 +18,6 @@ class Fn {
     Tout& output(unsigned index);
     unsigned outputs() const;
 
-    void propagateRequired();
-    void propagateUpdateNeeded();
-
     void eval();
     void update();
     bool updated() const;
@@ -34,6 +31,7 @@ class Fn {
 
   protected:
     virtual void run() = 0;
+
     void linkTensors();
 
   public:

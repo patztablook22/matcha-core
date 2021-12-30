@@ -18,6 +18,9 @@ namespace fn {
 
 class Tensor {
   public:
+    // null
+    Tensor();
+
     // scalar
     Tensor(float value);
 
@@ -55,7 +58,9 @@ class Tensor {
     template <class T = void> const T* get(size_t position) const;
     template <class T = void> const T* get(const std::vector<int>& indices) const;
 
+    bool null() const;
     bool scalar() const;
+
     unsigned rank() const;
     Dtype dtype() const;
     size_t size() const;

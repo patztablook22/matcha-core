@@ -11,7 +11,7 @@
 namespace matcha {
 namespace fn {
 
-ElementWiseBinary::ElementWiseBinary(Tin a, Tin b) {
+ElementWiseBinary::ElementWiseBinary(Tin& a, Tin& b) {
   if (a.tensor->scalar()) std::swap(a, b);
   assert(a.tensor->shape() == b.tensor->shape() || b.tensor->scalar());
   inputs_.push_back(a);
