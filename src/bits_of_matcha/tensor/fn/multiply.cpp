@@ -16,7 +16,7 @@ Multiply::Multiply(ExprWrap a, ExprWrap b)
 
 void Multiply::init() {
   ElementWise::init();
-  backend_ = device::ThreadPool().multiply(
+  backend_ = device_->multiply(
     ins_[0]->cache(),
     ins_[1]->cache(),
     *cache_[0]

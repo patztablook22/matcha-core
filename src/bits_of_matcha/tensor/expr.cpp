@@ -1,5 +1,6 @@
 #include "bits_of_matcha/tensor/expr.h"
 #include "bits_of_matcha/tensor/tensor.h"
+#include "bits_of_matcha/tensor/device/device.h"
 
 namespace matcha {
 
@@ -53,6 +54,10 @@ void Expr::require() {
   required_ = true;
 
   for(auto& out: outs_) out->require();
+}
+
+void Expr::use(device::Device& device) {
+  for (auto& in: ins_) in->use(device);
 }
 
 bool Expr::required() const {

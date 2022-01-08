@@ -5,11 +5,13 @@ namespace matcha {
 
 #include "bits_of_matcha/tensor/expr.h"
 #include "bits_of_matcha/tensor/utils.h"
+#include "bits_of_matcha/tensor/scope.h"
 
 #include "bits_of_matcha/tensor/tensor.h"
 
 #include "bits_of_matcha/tensor/fn/add.h"
 #include "bits_of_matcha/tensor/fn/multiply.h"
 
+#include "bits_of_matcha/tensor/device/default.h"
 #include "bits_of_matcha/tensor/device/cpu.h"
-#include "bits_of_matcha/tensor/device/cpu/add.h"
+#include "bits_of_matcha/tensor/device/threadpool.h"

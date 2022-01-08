@@ -26,6 +26,7 @@ target_sources(
   PRIVATE
     src/bits_of_matcha/tensor/expr.cpp
     src/bits_of_matcha/tensor/utils.cpp
+    src/bits_of_matcha/tensor/scope.cpp
 
     src/bits_of_matcha/tensor/dtype.cpp
     src/bits_of_matcha/tensor/shape.cpp
@@ -53,6 +54,9 @@ target_sources(
 
     src/bits_of_matcha/tensor/device/threadpool.cpp
     src/bits_of_matcha/tensor/device/threadpool/add.cpp
+
+    src/bits_of_matcha/tensor/device/global.cpp
+    src/bits_of_matcha/tensor/device/default.cpp
 )
 
 add_executable(

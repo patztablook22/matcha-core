@@ -78,10 +78,19 @@ void tensor() {
 }
 
 void benchmark() {
-  Tensor a(Dtypes::Float, {1000, 1000, 100});
-  Tensor b(Dtypes::Float, {1000, 1000, 100});
+  auto cpu  = device::Cpu();
+  auto cpu2 = device::ThreadPool(1);
+  auto pool = device::ThreadPool();
+
+  Tensor a(Dtypes::Float, {100, 100});
+  Tensor b(Dtypes::Float, {100, 100});
+
   Tensor c = a + b;
-  for (int i = 0; i < 50; i++) {
+
+  // c.use(cpu);
+
+
+  for (int i = 0; i < 1'000'000; i++) {
     a.require();
     c.eval();
   }
@@ -91,19 +100,21 @@ void lazy() {
   Tensor a(Dtypes::Float, {1'000, 100, 100});
   Tensor b(Dtypes::Float, {1'000, 100, 100});
 
-  Tensor c = a + b;
-  c.eval();
+  auto cpu  = device::Cpu();
+  auto pool = device::ThreadPool();
 
+  auto c = a + b;
+  c->use(cpu);
+
+  auto d = c * a;
+  d->use(pool);
 
 }
 
 int main() {
+  // lazy();
   benchmark();
-  // expr();
-  auto device = device::Cpu();
-  using (device) {
 
-  }
 
   return 0;
 }

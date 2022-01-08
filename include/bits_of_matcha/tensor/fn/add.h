@@ -12,7 +12,7 @@ class Add : public ElementWise {
     ARGXX_INHERIT(Add, ElementWise)
 
     Add(ExprWrap a, ExprWrap b);
-
+  
   private:
     void run() override;
     void init() override;

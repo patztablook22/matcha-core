@@ -16,7 +16,7 @@ Add::Add(ExprWrap a, ExprWrap b)
 
 void Add::init() {
   ElementWise::init();
-  backend_ = device::ThreadPool().add(
+  backend_ = device_->add(
     ins_[0]->cache(),
     ins_[1]->cache(),
     *cache_[0]

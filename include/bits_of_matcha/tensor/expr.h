@@ -8,6 +8,11 @@ namespace matcha {
 
 class Tensor;
 
+namespace device {
+  class Device;
+};
+
+
 class Expr {
   protected:
     bool required_;
@@ -28,6 +33,8 @@ class Expr {
 
     virtual void linkOut(Expr* out);
     virtual void unlinkOut(Expr* out);
+
+    virtual void use(device::Device& device);
 
     virtual const Tensor& cache(int index = 0) const = 0;
 
