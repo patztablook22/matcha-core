@@ -1,4 +1,4 @@
-#include <matcha>
+#include <tensor>
 #include <chrono>
 
 using namespace matcha;
@@ -36,90 +36,57 @@ Tensor get(Tensor& a) {
   );
 }
 
-void asdf(const Tensor& t) {
-
-}
-
-auto x4(const ExprWrap x) {
-  return x + x + x + x;
-}
-
 
 void expr() {
+  device::Default dev;
   Tensor a({4, 3}, {
     8, 2, 0,
     2, 2, 2,
     1, 1, 1,
     0, 0, 0
   });
-  Tensor b({4, 3}, {
-    1, 2, 3,
-    4, 4, 4,
-    1, 2, 2,
-    0, 0, 1
-  });
-
-  Tensor c = a * b * a * a;
-  c.eval();
-  cout << c;
-
-  a.at<float>(0) = -10;
-  a.require();
-  c.eval();
-  cout << c;
-
 
 }
 
-void tensor() {
-  Tensor a(
-    3
-  );
-}
-
-void benchmark() {
+void benchmark(float sizeCoef, float timeCoef, bool debug) {
   auto cpu  = device::Cpu();
   auto cpu2 = device::ThreadPool(1);
   auto pool = device::ThreadPool();
 
-  Tensor a(Dtypes::Float, {100, 100});
-  Tensor b(Dtypes::Float, {100, 100});
+  size_t iterations = timeCoef * 1e5 / sizeCoef;
 
-  Tensor c = a + b;
+  Tensor a(Dtypes::Float, {(unsigned)sizeCoef, 100, 100});
+  Tensor b(Dtypes::Float, {(unsigned)sizeCoef, 100, 100});
 
-  // c.use(cpu);
+  // Tensor c = a + b;
+  Tensor c(fn::Add(&a, &b));
+
+  // for (auto& axis: a.shape()) cout << axis << " ";
+  // cout << endl;
+  // cout << iterations << " iterations" << endl;
+  // exit(1);
+
+  c.use(cpu);
+  // cout << "------" << endl;
 
 
-  for (int i = 0; i < 1'000'000; i++) {
+  for (int i = 0; i < iterations; i++) {
     a.require();
     c.eval();
   }
 }
 
-void lazy() {
-  Tensor a(Dtypes::Float, {1'000, 100, 100});
-  Tensor b(Dtypes::Float, {1'000, 100, 100});
 
-  auto cpu  = device::Cpu();
-  auto pool = device::ThreadPool();
-
-  auto c = a + b;
-  c->use(cpu);
-
-  auto d = c * a;
-  d->use(pool);
-
-}
-
-int main() {
+int main(int argc, char** argv) {
   // lazy();
-  benchmark();
+  if (argc == 4) {
+    float sizeCoef = ::stof(argv[1]);
+    float timeCoef = ::stof(argv[2]);
+    bool debug = ::stoi(argv[3]);
+    benchmark(sizeCoef, timeCoef, debug);
+  }
+  // expr();
 
 
   return 0;
 }
-
-  // auto start = high_resolution_clock::now();
-  // auto stop = high_resolution_clock::now();
-  // auto duration = duration_cast<milliseconds>(stop - start);
-  // // cout << duration.count() << " ms" << endl;

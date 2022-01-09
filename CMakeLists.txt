@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.17)
 project(
-  matcha VERSION 0.0
+  matcha-core VERSION 0.0
   DESCRIPTION "Attachable Machine Learning"
   LANGUAGES CXX
 )
@@ -18,8 +18,8 @@ target_include_directories(
     include/
 )
 
-target_link_libraries(matcha pthread)
-target_link_libraries(matcha Argxx)
+target_link_libraries(${PROJECT_NAME} pthread)
+target_link_libraries(${PROJECT_NAME} Argxx)
 
 target_sources(
   ${PROJECT_NAME}
@@ -70,4 +70,33 @@ target_include_directories(
     include/
 )
 
-target_link_libraries(main PUBLIC matcha)
+target_link_libraries(main PUBLIC ${PROJECT_NAME})
+
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file(
+    "${PROJECT_BINARY_DIR}/matcha-coreConfigVersion.cmake"
+    VERSION 0.1
+    COMPATIBILITY AnyNewerVersion
+)
+
+install(TARGETS ${PROJECT_NAME}
+    EXPORT matcha-coreTargets
+    LIBRARY DESTINATION lib COMPONENT Runtime
+    ARCHIVE DESTINATION lib COMPONENT Development
+    RUNTIME DESTINATION bin COMPONENT Runtime
+    PUBLIC_HEADER DESTINATION include COMPONENT Development
+    BUNDLE DESTINATION bin COMPONENT Runtime
+)
+
+include(CMakePackageConfigHelpers)
+configure_package_config_file(
+    "${PROJECT_SOURCE_DIR}/cmake/matcha-coreConfig.cmake"
+    "${PROJECT_BINARY_DIR}/matcha-coreConfig.cmake"
+    INSTALL_DESTINATION lib/cmake/matcha-core
+)
+
+install(EXPORT matcha-coreTargets DESTINATION lib/cmake/matcha-core)
+install(FILES "${PROJECT_BINARY_DIR}/matcha-coreConfigVersion.cmake"
+              "${PROJECT_BINARY_DIR}/matcha-coreConfig.cmake"
+        DESTINATION lib/cmake/matcha-core)
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/ DESTINATION include)

@@ -14,6 +14,11 @@ class Add : public abstract::Add {
   
   private:
     int threads_;
+
+    const float* begA;
+    const float* endA;
+    const float* begB;
+    float* begC;
 };
 
 

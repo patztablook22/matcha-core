@@ -24,6 +24,10 @@ class ExprWrap : public argxx::Wrap<Expr> {
     ExprWrap(const Expr& fn);
     ExprWrap(Expr* fn);
 
+    // ExprWrap(const ExprWrap& other);
+
+    // const ExprWrap& operator=(const ExprWrap& other);
+
 };
 
 // using ExprWrap  = argxx::Wrap<Expr>;

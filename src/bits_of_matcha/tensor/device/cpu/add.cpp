@@ -12,17 +12,17 @@ namespace cpu {
 
 Add::Add(const Tensor& a, const Tensor& b, Tensor& c) 
   : abstract::Add(a, b, c)
-{}
+{
+  begA = &a_.at<float>(0);
+  endA = &a_.at<float>(0) + a_.size();
+  begB = &b_.at<float>(0);
+  begC = &c_.at<float>(0);
+}
 
 void Add::init() {
 }
 
 void Add::run() {
-  const float* begA = &a_.at<float>(0);
-  const float* endA = &a_.at<float>(0) + a_.size();
-  const float* begB = &b_.at<float>(0);
-  float* begC = &c_.at<float>(0);
-
   std::transform(
     begA, endA,
     begB,
